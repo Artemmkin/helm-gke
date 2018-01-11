@@ -6,16 +6,6 @@ ARG GCLOUD_VERSION=183.0.0
 ARG KUBECTL_VERSION=v1.9.1
 # https://github.com/kubernetes/helm/releases
 ARG HELM_VERSION=v2.7.2
-# build info
-ARG VCS_REF
-ARG BUILD_DATE
-
-# Metadata
-LABEL org.label-schema.vcs-ref=$VCS_REF \
-      org.label-schema.build-date=$BUILD_DATE \
-      org.label-schema.name="helm-gke" \
-      org.label-schema.url="https://hub.docker.com/r/artemkin/helm-gke/" \
-      org.label-schema.vcs-url="https://github.com/artemkin/helm-gke"
 
 # install dependencies
 RUN apk add --no-cache ca-certificates tar wget openssl python bash
@@ -40,5 +30,16 @@ RUN wget -q https://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-
     && rm -rf helm-${HELM_VERSION}-linux-amd64.tar.gz linux-amd64
 
 ENV PATH=$PATH:/opt/google-cloud-sdk/bin
+
+# build info
+ARG VCS_REF
+ARG BUILD_DATE
+
+# Metadata
+LABEL org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.name="helm-gke" \
+      org.label-schema.url="https://hub.docker.com/r/artemkin/helm-gke/" \
+      org.label-schema.vcs-url="https://github.com/artemkin/helm-gke"
 
 CMD ["bash"]
